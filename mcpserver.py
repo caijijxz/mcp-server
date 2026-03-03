@@ -1,11 +1,4 @@
 from fastmcp import FastMCP
-
-mcp = FastMCP("MCP Server")
-
-@mcp.tool
-def greet(name: str) -> str:
-    return f"Hello, bro, {name}!"
-
 from fastmcp.server.auth.providers.jwt import JWTVerifier, RSAKeyPair
 
 # 生成用于测试的密钥对
@@ -27,6 +20,12 @@ test_token = key_pair.create_token(
 )
 
 print(f"Test token: {test_token}")
+
+mcp = FastMCP("MCP Server", auth=verifier)
+
+@mcp.tool
+def greet(name: str) -> str:
+    return f"Hello, bro, {name}!"
 
 
 if __name__ == "__main__":
